@@ -1,20 +1,24 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
 import { join } from 'path';
-import { GraphQLModule } from '@nestjs/graphql';
+
+import {
+  ApolloServerPluginLandingPageLocalDefault
+} from '@apollo/server/plugin/landingPage/default';
 import { ApolloDriver } from '@nestjs/apollo';
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { JwtService } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { AuthModule } from './auth/auth.module';
+import { AuthorsModule } from './authors/authors.module';
 import { BooksModule } from './books/books.module';
 import { CategoriesModule } from './categories/categories.module';
-import { AuthorsModule } from './authors/authors.module';
-import { ReviewsModule } from './reviews/reviews.module';
 import { FollowsModule } from './follows/follows.module';
-import { UsersModule } from './users/users.module';
-import { JwtService } from '@nestjs/jwt';
+import { ReviewsModule } from './reviews/reviews.module';
 import { SeedsModule } from './seeds/seeds.module';
 import { UserBooksModule } from './user-books/user-books.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -41,6 +45,9 @@ import { UserBooksModule } from './user-books/user-books.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: true,
+      ssl: {
+        rejectUnauthorized: true,
+      },
       autoLoadEntities: true,
     }),
     AuthModule,

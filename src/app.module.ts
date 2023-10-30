@@ -28,7 +28,8 @@ import { UsersModule } from './users/users.module';
       imports: [AuthModule],
       inject: [JwtService],
       useFactory: async () => ({
-        playground: true,
+        playground: false,
+        introspection: true,
         autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
         plugins: [
           ApolloServerPluginLandingPageLocalDefault()

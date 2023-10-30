@@ -45,9 +45,6 @@ import { UsersModule } from './users/users.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: true,
-      ssl: {
-        rejectUnauthorized: true,
-      },
       autoLoadEntities: true,
     }),
     AuthModule,

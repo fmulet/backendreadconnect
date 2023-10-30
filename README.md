@@ -16,3 +16,4 @@ Está desarrollado con Nest JS, GraphQL y MySQL. Se utilizó Docker para el desa
 7. Visitar el sitio: Ingresar al link: `localhost:3000/graphql`.
 8. Insertar los datos en la base de datos como seed: Para generar el seed, en Apollo ejecutar la función `executedSeed` en los mutations. Si sale todo bien, debe aparecer la respuesta `true`.
 9. Los datos están en la carpeta `/src/seeds/data`.
+# backendreadconnect

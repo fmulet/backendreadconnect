@@ -1,0 +1,238 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Follow {
+  id: ID!
+  follower: User!
+  following: User!
+}
+
+type Author {
+  id: ID!
+  name: String!
+  books: [Book!]!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  books: [Book!]!
+}
+
+type UserBook {
+  id: ID!
+  user: User!
+  book: Book!
+  status: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  isbn: String!
+  pageCount: Float!
+  publishedDate: DateTime!
+  thumbnailUrl: String!
+  shortDescription: String
+  longDescription: String
+  status: String!
+  authors: [Author!]!
+  categories: [Category!]!
+  reviews: [Review!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Review {
+  id: ID!
+  content: String!
+  rating: Float!
+  user: User!
+  book: Book!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  isActive: Boolean!
+  roles: [String!]!
+  reviews: [Review!]
+  userBooks: [UserBook!]
+  followedBy: [Follow!]
+  follows: [Follow!]
+  createdAt: DateTime!
+}
+
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
+type Query {
+  revalidate: AuthResponse!
+  users(roles: [ValidRoles!] = []): [User!]!
+  user(id: ID!): User!
+  allBooks(limit: Int! = 10, offset: Int! = 0): [Book!]!
+  book(id: ID!): Book!
+  authors: [Author!]!
+  author(id: Int!): Author!
+  categories: [Category!]!
+  category(id: Int!): Category!
+  reviews: [Review!]!
+  review(id: ID!): Review!
+  follows: [Follow!]!
+  followers(userId: ID!): [Follow!]!
+  following(userId: ID!): [Follow!]!
+  follow(id: ID!): Follow!
+  userBooks: [UserBook!]!
+  userBook(id: String!): UserBook!
+}
+
+"""Valid user roles"""
+enum ValidRoles {
+  admin
+  user
+}
+
+type Mutation {
+  signup(signupInput: SignUpInput!): AuthResponse!
+  login(loginInput: Logininput!): AuthResponse!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  blockUser(id: ID!): User!
+  createBook(createBookInput: CreateBookInput!): Book!
+  updateBook(updateBookInput: UpdateBookInput!): Book!
+  removeBook(id: Int!): Book!
+  createAuthor(createAuthorInput: CreateAuthorInput!): Author!
+  updateAuthor(updateAuthorInput: UpdateAuthorInput!): Author!
+  removeAuthor(id: Int!): Author!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  removeCategory(id: Int!): Category!
+  createReview(createReviewInput: CreateReviewInput!): Review!
+  updateReview(updateReviewInput: UpdateReviewInput!): Review!
+  removeReview(id: ID!): Review!
+  createFollow(createFollowInput: CreateFollowInput!): Follow!
+  updateFollow(updateFollowInput: UpdateFollowInput!): Follow!
+  removeFollow(id: ID!): Follow!
+
+  """Ejecuta la construcci�n de la base de datos"""
+  executeSeed: Boolean!
+  createUserBook(createUserBookInput: CreateUserBookInput!): UserBook!
+  updateUserBook(updateUserBookInput: UpdateUserBookInput!): UserBook!
+  removeUserBook(id: String!): UserBook!
+}
+
+input SignUpInput {
+  name: String!
+  email: String!
+  password: String!
+  roles: [ValidRoles!] = [user]
+}
+
+input Logininput {
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  password: String
+  roles: [ValidRoles!]
+  id: ID!
+  isActive: Boolean
+}
+
+input CreateBookInput {
+  title: String!
+  isbn: String!
+  authors: [Int!]!
+  categories: [Int!]!
+  pageCount: Int!
+  publishedDate: DateTime!
+  limit: Int
+  offset: Int
+}
+
+input UpdateBookInput {
+  title: String
+  isbn: String
+  authors: [Int!]
+  categories: [Int!]
+  pageCount: Int
+  publishedDate: DateTime
+  limit: Int
+  offset: Int
+  id: Int!
+}
+
+input CreateAuthorInput {
+  """Name of the author"""
+  name: String!
+}
+
+input UpdateAuthorInput {
+  """Name of the author"""
+  name: String
+  id: Int!
+}
+
+input CreateCategoryInput {
+  """Name of the category"""
+  name: String!
+}
+
+input UpdateCategoryInput {
+  """Name of the category"""
+  name: String
+  id: Int!
+}
+
+input CreateReviewInput {
+  content: String!
+  rating: Float!
+  userId: String!
+  bookId: Int!
+}
+
+input UpdateReviewInput {
+  content: String
+  rating: Float
+  userId: String
+  bookId: Int
+  id: String!
+}
+
+input CreateFollowInput {
+  followerId: String!
+  followingId: String!
+}
+
+input UpdateFollowInput {
+  followerId: String
+  followingId: String
+  id: String!
+}
+
+input CreateUserBookInput {
+  userId: String!
+  bookId: String!
+  status: BookStatus!
+}
+
+enum BookStatus {
+  WANTED
+  READ
+}
+
+input UpdateUserBookInput {
+  userId: String
+  bookId: String
+  status: BookStatus
+  id: String!
+}

@@ -1,0 +1,33 @@
+
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+-w {"Total":"%{time_total}s"}\n
+
+{
+  "email": "z0M8C@example.com",
+  "password": "Abc12345",
+  "name": "Test" 
+}
+
+
+###
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+-w {"Total":"%{time_total}s"}\n
+
+{
+  "email": "z0M8C@example.com",
+  "password": "Abc12345" 
+}
+
+###
+
+GET http://localhost:3000/api/auth/private
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InowTThDQGV4YW1wbGUuY29tIiwiaWF0IjoxNjk4MTEzMjMzLCJleHAiOjE2OTgxMjA0MzN9.Ctp8G78eZmcYgj9M_KjgElPt-jxi0XIvjRzC_LE2vgI  
+
+-w {"Total":"%{time_total}s"}\n
+
+
